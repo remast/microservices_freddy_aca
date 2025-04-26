@@ -1,5 +1,5 @@
 resource "azurerm_container_app" "kitchen" {
-  name                         = "shop-frontend"
+  name                         = "kitchen"
   container_app_environment_id = azurerm_container_app_environment.app_container_env.id
   resource_group_name          = azurerm_resource_group.freddy.name
   revision_mode                = "Single"
@@ -7,7 +7,7 @@ resource "azurerm_container_app" "kitchen" {
   template {
     container {
       name   = "kitchen"
-      image  = "ghcr.io/remast/kitchen:0.1.0"
+      image  = "ghcr.io/remast/kitchen-aca:0.1.0"
       cpu    = 0.25
       memory = "0.5Gi"
     }

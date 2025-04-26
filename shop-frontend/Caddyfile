@@ -14,7 +14,7 @@
 
 	handle /delivery/* {
 		uri strip_prefix /delivery
-		reverse_proxy http://deliver {
+		reverse_proxy http://delivery {
         	header_up -Host
         }
 	}
