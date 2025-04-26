@@ -12,7 +12,7 @@ resource "azurerm_container_app" "shop-frontend" {
       memory = "0.5Gi"
     }
     max_replicas = 1
-    min_replicas = 0
+    min_replicas = var.min_replicas
   }
   ingress {
     target_port      = 4200
@@ -23,4 +23,8 @@ resource "azurerm_container_app" "shop-frontend" {
     }
   }
 
+}
+
+output "shop_frontend_latest_revision_fqdn" {
+  value = azurerm_container_app.shop-frontend.latest_revision_fqdn
 }

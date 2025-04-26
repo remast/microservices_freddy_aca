@@ -6,7 +6,7 @@ resource "azurerm_container_app" "delivery" {
 
   template {
     container {
-      name   = "order"
+      name   = "delivery"
       image  = "ghcr.io/remast/delivery-aca:0.1.0"
       cpu    = 0.5
       memory = "1.0Gi"
@@ -15,7 +15,7 @@ resource "azurerm_container_app" "delivery" {
     min_replicas = var.min_replicas
   }
   ingress {
-    target_port      = 8060
+    target_port      = 8050
     external_enabled = false
     traffic_weight {
       latest_revision = true
