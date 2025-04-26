@@ -7,7 +7,7 @@ resource "azurerm_container_app" "shop-frontend" {
   template {
     container {
       name   = "shop-frontend"
-      image  = "ghcr.io/linkedinlearning/shop-frontend-aca:latest"
+      image  = "ghcr.io/remast/shop-frontend-aca:0.1.0"
       cpu    = 0.25
       memory = "0.5Gi"
     }

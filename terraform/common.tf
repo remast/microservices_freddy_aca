@@ -18,10 +18,5 @@ resource "azurerm_container_app_environment" "app_container_env" {
   name                               = "cae-${var.project}-${var.stage}-${var.location}"
   location                           = azurerm_resource_group.freddy.location
   resource_group_name                = azurerm_resource_group.freddy.name
-  infrastructure_resource_group_name = "${azurerm_resource_group.freddy.name}-cae-d-compute"
   log_analytics_workspace_id         = azurerm_log_analytics_workspace.app_log_analytics.id
-  workload_profile {
-    name = "Consumption"
-    workload_profile_type  = "Consumption" 
-  }
 }

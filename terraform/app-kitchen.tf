@@ -7,7 +7,7 @@ resource "azurerm_container_app" "kitchen" {
   template {
     container {
       name   = "kitchen"
-      image  = "ghcr.io/linkedinlearning/kitchen:latest"
+      image  = "ghcr.io/remast/kitchen:0.1.0"
       cpu    = 0.25
       memory = "0.5Gi"
     }
@@ -15,7 +15,7 @@ resource "azurerm_container_app" "kitchen" {
     min_replicas = 0
   }
   ingress {
-    target_port      = 4200
+    target_port      = 8070
     external_enabled = false
     traffic_weight {
       latest_revision = true
