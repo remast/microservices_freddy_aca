@@ -3,6 +3,11 @@ variable "project" {
   default = "freddy"
 }
 
+variable "min_replicas" {
+  type    = number
+  default = 0
+}
+
 variable "stage" {
   type    = string
   default = "dev"
