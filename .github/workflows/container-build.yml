@@ -1,0 +1,47 @@
+name: Deploy Images to GHCR
+
+on:
+  push:
+    branches:
+      - feature/azure-container-apps-demo
+
+jobs:
+      push-store-images:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+          - name: 'Checkout GitHub Action'
+            uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+          - name: 'Login to GitHub Container Registry'
+            uses: docker/login-action@v3
+            with:
+              registry: ghcr.io
+              username: ${{github.actor}}
+              password: ${{secrets.GITHUB_TOKEN}}
+
+          - name: 'Build + Push Image Delivery'
+            run: |
+              cd delivery
+              docker build . --tag ghcr.io/remast/delivery-aca:latest
+              docker push ghcr.io/remast/delivery-aca:latest
+
+          - name: 'Build + Push Image Order'
+            run: |
+              cd order
+              docker build . --tag ghcr.io/remast/order-aca:latest
+              docker push ghcr.io/remast/order-aca:latest
+
+          - name: 'Build + Push Image Kitchen'
+            run: |
+              cd kitchen
+              docker build . --tag ghcr.io/remast/kitchen-aca:latest
+              docker push ghcr.io/remast/kitchen-aca:latest
+
+          - name: 'Build + Push Image Shop Frontend'
+            run: |
+              cd shop-frontend
+              docker build . --tag ghcr.io/remast/shop-frontend-aca:latest
+              docker push ghcr.io/remast/shop-frontend-aca:latest
