@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <title>Go Serverless | Jan Stamer</title>
+  <title>Microservices lieben Azure Container Apps | Jan Stamer</title>
 
   <link rel="stylesheet" href="./assets/node_modules/reveal.js/dist/reset.css" />
   <link rel="stylesheet" href="./assets/node_modules/reveal.js/dist/reveal.css" />
@@ -20,755 +20,128 @@
     <div class="slides">
       <section data-background-image="./themes/Pattern-11-outline.svg" data-background-size="400px"
         data-background-repeat="repeat" data-background-opacity=".15">
-        <h1>Microservices lieben Azure Container Apps</h1>
+        <h1>Microservices lieben Azure Container Apps <br>💝</h1>
         <aside class="notes">
         </aside>
       </section>
       <section>
-        <h2>Go App Engine Cold Start</h2>
-        <img src="themes/go-cloud-native/baralga-startup.png" />
-        <div class="fragment box-content rounded p-6 border-4 transform -rotate-12 text-black"
-          style="position: relative; top: -180px; background-color: #dbd4d4;">
-          Up and running in 500ms! 🚀
-        </div>
+        <h2>Azure Container Apps</h2>
+        <h2>Container aber einfach</h2>
       </section>
-      <!--
-      <section>
-        <div class="grid grid-cols-3 gap-1 items-center">
-          <div></div>
-          <div class="">
-            <img src="./themes/go-cloud-native/gopher.svg" class="align-middle" />
-          </div>
-          <div></div>
-        </div>
-      </section>
-      <section>
-        <blockquote>
-          Go has steadily grown in popularity as top language among developers
-          of projects like Docker and Kubernetes.
-          <br />
-          <br />
-          This past year, it saw a sharp increase in use due to its ease of
-          use and powerful functionalities in cloud development.
-        </blockquote>
-        https://octoverse.github.com/2022/top-programming-languages
-      </section>
-      <section data-run-in-terminal="01_hellogopher\hellogopher.go" data-run-in-terminal-bin="go">
-        <h2>Hello Gopher</h2>
-        <pre><code data-trim data-noescape class="go">
-      package main
-      
-      import "fmt"
-      
-      func main() {
-        fmt.Println("Hello Gopher!")
-      }
-    </code></pre>
-        <div>
-          <span class="fragment">
-            Ausführen
-            <pre><code data-trim data-noescape>
-          go build hellogopher.go // 1. Code kompilieren
-          ./hellogopher           // 2. Binary ausführen
-        </code></pre>
-          </span>
-          <pre class="fragment"><code data-trim data-noescape>
-        go run hellogopher.go   // Code kompilieren und ausführen
-      </code></pre>
-        </div>
-        <aside class="notes">
-          - Every Go program is made up of packages. - Programs start running
-          in package main. This program is using the packages with import
-          paths "fmt" and "math/rand".
-        </aside>
-      </section>
-      <section>
-        <h2>Entwicklung</h2>
-        <div class="grid grid-cols-3 gap-32 items-center fragment">
-          <div class="col-span-1">
-            <img src="./themes/go-cloud-native/goland_logo_300x300.png" />
-            JetBrains GoLand
-          </div>
-          <div class="col-span-1">
-            <img src="./themes/go-cloud-native/Visual_Studio_Code_1.35_icon.svg" />
-            Visual Studio Code
-          </div>
-          <div class="col-span-1">
-            <img src="./themes/go-cloud-native/Vimlogo.svg" />
-            Vim Go
-          </div>
-        </div>
-      </section>
-      -->
-      <section>
-        <h2 style="font-size: 170%" class="cross-white">Serverless Booster</h2>
-        <ol style="font-size: 130%; list-style-type:none;">
-          <li class="fragment">🏃 Schnell</li>
-          <li class="fragment">☯️ Einfach</li>
-          <li class="fragment">🚂 Zuverlässig</li>
-        </ol>
-      </section>
-      <section>
-        <h2>5 Fakten zu Go</h2>
-        <div class="grid grid-cols-12 gap-1 items-center">
-          <div class="col-span-9">
-            <ol>
-              <li class="fragment">statisches Typsystem</li>
-              <li class="fragment">Garbage Collection</li>
-              <li class="fragment">keine Vererbung</li>
-              <li class="fragment">Concurrency eingebaut</li>
-              <li class="fragment">native Ausführung
-                <br />
-                <span style="
-            position: relative;
-            top: -1.1em;
-            font-size: 60%;
-            font-size: 60%;
-            ">Linux, Win, z/OS, 386, amd64, ARM, WebAssembly, ...</span>
-              </li>
-            </ol>
-          </div>
-          <div class="col-span-3">
-            <img src="./themes/go-cloud-native/gopher.svg" />
-          </div>
-        </div>
-      </section>
-    
       <section>
         <section data-background-image="./themes/Pattern-29-outline.svg" data-background-size="400px"
           data-background-repeat="repeat" data-background-opacity=".15">
-          <h1 class="cross-white">Serverless Computing</h1>
+          <h1 class="cross-white">Azure Container Apps @crossnative</h1>
         </section>        
         <section>
-          <h2 class="cross-white">Serverless Computing</h2>
+          <h2 class="cross-white">Ausgangssituation</h2>
           <ul>
-            <li class="fragment">Dynamische Skalierung (0 bis x)</li>
-            <li class="fragment">Pay per Use</li>
-            <li class="fragment">Ereignis getrieben (HTTP, Message, Storage, ...)</li>
-            <li class="fragment">Ausführung auf verwalteter Infrastruktur</li>
-            <li class="fragment">Cloud Anbieter übernimmt Logs, Metriken, ...</li>
+            <li class="fragment">Standardisierte Software Projekte</li>
+            <li class="fragment">Fokus auf Anwendungen nicht Infrastruktur</li>
+            <li class="fragment">Launchpad Stack mit Spring, Postgres, ...</li>
+            <li class="fragment">Cloud Umgebung von Außen verfügbar</li>
+            <li class="fragment">Container basiert und k8s nah</li>
+            <li class="fragment">Pay-per-Use</li>
           </ul>
+          <div class="fragment box-content rounded p-6 border-4 transform -rotate-12 text-black"
+          style="position: relative; top: -180px; background-color: #dbd4d4;">
+          Azure Container Apps ! 🚀
+          </div>
         </section>
         <section>
-          <h2 class="cross-white" style="margin-bottom: 1em;">Serverless Tarifrechner DogOp</h2>
-          <div class="grid grid-cols-12 gap-1 content-start" style="font-size: 75%;">
-            <div class="col-span-6 fragment">
-              <h3 class="cross-white">Function-as-a-Service</h3>
-              <ol>
-                <li class="cross-yellow">Google Cloud Run Function</li>
-                <li class="cross-blue">Azure Function App</li>
-              </ol>
+          <h2 class="cross-white" style="margin-bottom: 1em;">Azure Container Apps</h2>
+          <div class="grid grid-cols-12 gap-1 content-start">
+            <div class="col-span-3 fragment">
+              safa
             </div>
-            <div class="col-span-6 fragment">
-              <h3 class="cross-white">Serverless Containers</h3>
-              <ol start="3">
-                <li class="cross-yellow">Google Cloud Run</li>
-                <li class="cross-blue">Azure Container Apps</li>
-              </ol>
+            <div class="col-span-9 fragment">
+              <ul>
+                <li class="fragment">vollständig verwaltete Container Plattform</li>
+                <li class="fragment">flexibel Skalierbar (Zero to Hero)</li>
+                <li class="fragment">"mini" k8s mit 1 Namespace</li>
+                <li class="fragment">basiert auf Azure Kubernetes Plattform</li>
+                <li class="fragment">Kubernetes ohne Server</li>
+                <li class="fragment">KEDA Autoscaling, Replicas und Ingress von Kubernetes</li>
+              </ul>
             </div>
           </div>
         </section>
-  
+        <section>
+          <h2 class="cross-white">ACA @crossnative</h2>
+          <ul>
+            <li class="fragment">nutzen ACA seit 2 Jahren</li>
+            <li class="fragment">erst nur für Test und Entwicklung</li>
+            <li class="fragment">produktiver Betrieb mehrerer Anwendungen</li>
+          </ul>
+        </section>
     </section>
       <section>
         <section data-background-image="./themes/Pattern-13-outline.svg" data-background-size="400px"
         data-background-repeat="repeat" data-background-opacity=".15">
-          <h1 class="cross-yellow">Quote <br /> Google Cloud Run Function</h1>
+          <h1 class="cross-red">Freddys BBQ <br/>Basis Setup <br/>🍖</h1>
+        </section>
+        <section >
+          <h2 class="cross-red">Freddys BBQ _ Übersicht</h2>
+          <img src="themes/bbq-arch.png" width="460"/>
+        </section>
+        <section data-background-image="themes/growtika-ZfVyuV8l7WU-unsplash.jpg" 
+         data-background-opacity=".2">
+          <h2 class="cross-red" >Microservices mit Azure Container Apps</h2>
+              <ol>
+                <li class="fragment">ein gemeinsames Container App Environment</li>
+                <li class="fragment">eine Container App je Microservice</li>
+                <li class="fragment">App Insights und Log Analytics gemeinsam </li>
+              </ol>
         </section>
         <section>
-          <h2 class="cross-yellow">Quote Cloud Run Function</h2>
-          <ul>
-            <li class="fragment">API die Hunde OP Versicherung berechnet</li>
-            <li class="fragment">Bereitstellung als Google Cloud Run Function</li>
-          </ul>
+          <h2 class="cross-red">Freddys BBQ _ Infrastruktur</h2>
+          <img src="themes/bbq-aca-overview-1.png" width="650"/>
+        </section>
+        <section >
+          <h2 class="cross-red">Freddys BBQ _ Infrastruktur</h2>
+          <img src="themes/bbq-aca-overview-2.png" width="650"/>
         </section>
         <section>
-          <h2 class="cross-yellow">Quote API für Rechner</h2>
-          <div class="grid grid-cols-12 gap-1 content-start" style="font-size: 75%;">
-            <div class="col-span-6">
-              <span class="fragment">
-                Request
-                <pre><code data-trim data-noescape class="bash">
-                POST /quote
-                Content-Type: application/json
-                
-                {
-                  "age": 8,
-                  "breed": "chow"
-                }
-              </code></pre>
-              </span>
-            </div>
-            <div class="col-span-6">
-              <span class="fragment">
-                Response
-                <pre><code data-trim data-noescape class="bash">
-                HTTP/1.1 200 OK
-                Content-Type: application/json
-                
-                {
-                  "age": 8,
-                  "breed": "chow",
-                  "tariffs": [
-                    {
-                      "name": "Dog OP _ Basic",
-                      "rate": 12.4
-                    }
-                  ]
-                }
-              </code></pre>
-              </span>
-            </div>
-          </div>
+          <h2 class="cross-red" >Container App Environment</h2>
+          <img src="themes/bbq-aca-container-env.png" width="540"/>
         </section>
         <section>
-          <h2 class="cross-yellow">Quote Function aufsetzen</h2>
-          <pre class="fragment"><code data-trim data-noescape class="java">
-          // Go Modul initialisieren
-          go mod init crossnative.com/dogop-serverless
-        </code></pre>
-          <pre class="fragment"><code data-trim data-noescape class="java">
-          // Google Cloud Functions Framework einbinden
-          go get github.com/GoogleCloudPlatform/functions-framework-go
-        </code></pre>
-          <span class="fragment">Projektstruktur
-            <pre><code data-trim data-noescape class="java">
-            go.mod // Modul Deskriptor mit Dependencies
-            go.sum // Checksummen der Dependencies
-          </code></pre>
-          </span>
+          <h2 class="cross-red" >Freddys Container Apps</h2>
+          <img src="themes/aca-cae-screenshot.png" width=1400"/>
         </section>
         <section>
-          <h2 class="cross-yellow">Quote Function aufsetzen</h2>
-          <pre style="font-size: 0.403em;"><code data-trim data-noescape class="go" data-line-numbers="1|3-6|8,9,13|10-12|">
-          package function
-          
-          import (
-            "net/http"
-            "github.com/GoogleCloudPlatform/functions-framework-go/functions"
-          )
-          
-          // Package Init Function
-          func init() {
-            functions.HTTP("HandleQuote", func(w http.ResponseWriter, req *http.Request) {
-              w.Write([]byte("Hello Quote!"))
-            })
-          }
-        </code></pre>
+          <h2 class="cross-red" >Shop Frontend Container App</h2>
+          <img src="themes/aca-app-shop-frontend-screenshot.png" width=1400"/>
         </section>
         <section>
-          <h2 class="cross-yellow">Quote Function erstellen</h2>
-          <img class="fragment" src="themes/go-serverless/gcp-cloud-run-func-1.png" />
-        </section>
-        <section>
-          <h2 class="cross-yellow">Quote Function erstellen</h2>
-          <img src="themes/go-serverless/gcp-cloud-run-func-2.png" />
-        </section>
-        <section>
-          <h2 class="cross-yellow">Quote Function testen</h2>
-          <img class="fragment" src="themes/go-serverless/gcp-cloud-run-func-3.png" />
-        </section>
-        <section>
-          <h2 class="cross-yellow">Quote mit Rechner</h2>
-          <pre style="font-size: 0.44em;" class="fragment"><code data-trim data-noescape class="go" data-line-numbers="1,12,15|2-4|6-8|10-12|">
-          func HandleQuote(w http.ResponseWriter, r *http.Request) {
-            // 1. JSON Request lesen
-            var quote Quote
-            json.NewDecoder(r.Body).Decode(&q)
-            
-            // 2. Tarif berechnen
-            tariff := Tariff{Name: "Dog OP _ Basic", Rate: 12.4}
-            quote.Tariffs = []Tariff{tariff}
-            
-            // 3. JSON Response schreiben
-            json.NewEncoder(w).Encode(quote)
-          }
-          
-          func init() {
-            functions.HTTP("HandleQuote", HandleQuote)
-          }
-        </code></pre>
-          <div class="fragment box-content rounded p-6 border-4 transform -rotate-12 text-black"
-            style="position: relative; top: -280px; background-color: rgba(255, 200, 0);">
-            Achtung, noch ohne Fehlerhandling! 💣
-          </div>
-        </section>
-        <section>
-          <h2 class="cross-yellow">Struct <span style="font-size: 50%;">statt Klasse</span></h2>
-          <pre><code data-trim data-noescape data-line-numbers="1-4|6-10|" class="go">
-          type Tariff struct {
-            Name string  `json:"name"`
-            Rate float64 `json:"rate"`
-          }
-          
-          type Quote struct {
-            Age     int      `json:"age"`
-            Breed   string   `json:"breed"`
-            Tariffs []Tariff `json:"tariffs"`
-          }          
-        </code></pre>
-          <pre class="fragment"><code data-trim data-noescape class="go">
-          // Struct erzeugen
-          tariff := Tariff{Name: "Dog OP _ Basic", Rate: 12.4}
-        </code></pre>
-        </section>
-        <section>
-          <h2 class="cross-yellow">Quote Function deployen</h2>
-          <ul>
-            <li class="fragment">Deployment als Zip-Datei</li>
-            <li class="fragment">Cloud Build baut Docker Container</li>
-          </ul>
-          <pre class="fragment"><code data-trim data-noescape class="bf">
-            function.zip
-              |- function.go
-              |- go.mod
-          </code></pre>
-        </section>
-        <section>
-          <h2 class="cross-yellow">Quote Function testen</h2>
-          <img class="fragment" src="themes/go-serverless/gcp-cloud-run-func-rest-test.png" />
-        </section>
-        <section>
-          <h3 class="cross-yellow">Quote Cloud Run Function <br> <span style="font-size: 70%; position: relative; top: -15px;">Zahlen, Daten, Fakten</span></h3>
-          <ul>
-            <li class="fragment">Function Container Image <b class="cross-blue">14,5 MB</b></li>
-            <li class="fragment">Container Startup in <b class="cross-blue">50-60 ms</b></li>
-            <li class="fragment">Hauptspeicher <b class="cross-blue">25 MB</b></li>
-            <li class="fragment">Antwortzeit Quote <b class="cross-blue">15 ms</b></li>
-          </ul>
-        </section>
-        <section>
-          <h2 class="cross-yellow">Fehler 💣</h2>
-          <pre style="font-size: 0.53em;"><code data-trim data-noescape class="go" data-line-numbers="1,12|4,11">
-          func HandleQuote(w http.ResponseWriter, r *http.Request) {
-            // 1. JSON Request lesen
-            var q Quote
-            json.NewDecoder(r.Body).Decode(&q) // 💣 Fehler möglich!
-            
-            // 2. Tarif berechnen
-            tariff := Tariff{Name: "Dog OP _ Basic", Rate: 12.4}
-            quote.Tariffs = []Tariff{tariff}
-            
-            // 3. JSON Response schreiben
-            json.NewEncoder(w).Encode(quote) // 💣 Fehler möglich!
-          }
-        </code></pre>
-          <aside class="notes">
-            <ul>
-              <li>Go kennt kein spezielles Konstrukt zur Fehlerbehandlung</li>
-              <li>Fehler sind normale Rückgabewerte</li>
-            </ul>
-          </aside>
-        </section>
-        <section>
-          <img src="themes/go-cloud-native/godoc-decode.png" />
-        </section>
-        <section>
-          <h2 class="cross-yellow">Fehler 💣</h2>
-          <ul>
-            <li class="fragment">Go kennt kein spezielles Konstrukt zur Fehlerbehandlung</li>
-            <li class="fragment">Fehler sind normale Rückgabewerte</li>
-          </ul>
-        </section>
-        <section>
-          <h2 class="cross-yellow">Fehler 💣</h2>
-          <pre style="font-size: 0.44em;"><code data-trim data-noescape class="go" data-line-numbers="1,16|5,6|8,9,13|10-12{5-13}">
-          func HandleQuote(w http.ResponseWriter, r *http.Request) {
-            // 1. JSON Request lesen
-            var q Quote
-            
-            // Potentieller Fehler 💣
-            err := json.NewDecoder(r.Body).Decode(&q)
-            
-            // Auf Fehler prüfen
-            if err != nil {
-              // Fehler behandeln
-              http.Error(w, "Could not decode quote.😔", http.StatusBadRequest)
-              return
-            }
-            
-            // ...
-          }
-        </code></pre>
-          <aside class="notes">
-            <ul>
-              <li>Go kennt kein spezielles Konstrukt zur Fehlerbehandlung</li>
-              <li>Fehler sind normale Rückgabewerte</li>
-            </ul>
-          </aside>
-        </section>
-        <section>
-          <h2 class="cross-yellow">HTTP Handler testen</h2>
-          <ul>
-            <li class="fragment">HTTP Handler mit Standardlib testbar</li>
-            <li class="fragment">Unit Tests in Standardlib enthalten</li>
-            <li class="fragment">Google Cloud Functions sind HTTP Handler</li>
-            <li class="fragment">Tests in Datei <code>main_test.go</code></li>
-          </ul>
-        </section>
-        <section>
-          <h2 class="cross-yellow">HTTP Handler testen</h2>
-          <pre style="font-size: 0.41em; overflow: hidden;"><code data-trim data-noescape data-line-numbers="1,21|2-3|5-12|14-15|17-20|" class="go">
-          func TestHandleQuote(t *testing.T) {
-            // 1. HTTP Recorder erstellen
-            recorder := httptest.NewRecorder()
-            
-            // 2. Request erstellen (mit Body)
-            body := `
-            {
-              "age": 8,
-              "breed": "chow"
-            }
-            `
-            req, _ := http.NewRequest("GET", "/api/quote", strings.NewReader(body))
-            
-            // 3. Handler Funktion aufrufen
-            HandleQuote(recorder, req)
-            
-            // 4. Return Code prüfen
-            if recorder.Code != http.StatusOK {
-              t.Errorf("Wrong status: got %v expected %v", recorder.Code, http.StatusOK)
-            }
-          }
-        </code></pre>
-        </section>
-        <section>
-          <h2 class="cross-yellow">HTTP Handler testen</h2>
-          <pre class="fragment"><code data-trim data-noescape class="bash">
-          go test -v ./...
-        </code></pre>
-
-          <pre class="fragment"><code data-trim data-noescape class="bash">
-          === RUN TestHandleQuote
-          --- PASS: TestHandleQuote (0.00s)
-          PASS
-          ok crossnative.com/dogop-serverless 0.228s
-        </code></pre>
-        </section>
-        <section>
-          <h2 class="cross-yellow">HTTP Handler testen</h2>
-          <img src="themes/go-cloud-native/vscode_handler_test.png" width="80%" />
+          <h2 class="cross-red">Demo 🚧</h2>
         </section>
       </section>
       <section>
         <section data-background-image="./themes/Pattern-29-outline.svg" data-background-size="400px"
         data-background-repeat="repeat" data-background-opacity=".15">
-          <h1 class="cross-blue">Quote <br /> Azure Function App</h1>
+          <h1 class="cross-blue">Infrastruktur mit Terraform</h1>
         </section>
-        <section>
-          <h2 class="cross-blue">Quote Azure Function aufsetzen</h2>
-          <pre style="font-size: 0.45em;"><code data-trim data-noescape class="go" data-line-numbers="4-6,8,21|9-14|16-17|19-20|">
-            package main
-            
-            import (
-              "net/http"
-              "os"
-            )
-            
-            func main() {
-              // 1. Port initialisieren
-              listenAddr := ":8080" // Default Port
-              customHandlerPort, ok := os.LookupEnv("FUNCTIONS_CUSTOMHANDLER_PORT")
-              if ok {
-                listenAddr = ":" + customHandlerPort
-              }
-
-              // 2. Quote Handler registrieren
-              http.HandleFunc("/api/quote", HandleQuote)
-
-              // 3. Web Server starten
-              http.ListenAndServe(listenAddr, nil)
-            }
-          </code></pre>
-        </section>
-        <section>
-          <h2 class="cross-blue">Quote Azure Function aufsetzen</h2>
-          <div class="grid grid-cols-12 gap-1 content-start" style="font-size: 75%;">
-            <div class="col-span-6 fragment">
-              <kbd>host.json</kbd>
-              <pre style="font-size: 0.39em;"><code data-trim data-noescape class="json" data-line-numbers="">
-                {
-                  "version": "2.0",
-                  "logging": {
-                    "applicationInsights": {
-                      "samplingSettings": {
-                        "isEnabled": true,
-                        "excludedTypes": "Request"
-                      }
-                    }
-                  },
-                  "extensionBundle": {
-                    "id": "Microsoft.Azure.Functions.ExtensionBundle",
-                    "version": "[4.*, 5.0.0)"
-                  },
-                  "customHandler": {
-                    "description": {
-                      "defaultExecutablePath": "function",
-                      "workingDirectory": "",
-                      "arguments": []
-                    },
-                    "enableForwardingHttpRequest": true
-                  }
-                }
-              </code></pre>
-            </div>
-            <div class="col-span-6 fragment">
-              <kbd>quote/function.json</kbd>
-              <pre style="font-size: 0.39em;"><code data-trim data-noescape class="json" data-line-numbers="">
-                {
-                  "bindings": [
-                    {
-                      "authLevel": "anonymous",
-                      "type": "httpTrigger",
-                      "direction": "in",
-                      "name": "req",
-                      "methods": [
-                        "get",
-                        "post"
-                      ]
-                    },
-                    {
-                      "type": "http",
-                      "direction": "out",
-                      "name": "res"
-                    }
-                  ]
-                }
-              </code></pre>
-            </div>
-          </div>
-        </section>
-        <section>
-          <h2 class="cross-blue">Quote Azure Function deployen</h2>
-          <ul>
-            <li class="fragment">Deployment als Zip-Datei</li>
-            <li class="fragment">Function Binary als Linux Executable <br> <kbd style="font-size: 0.7em; position: relative; top: -10px">GOOS=linux GOARCH=amd64 go build main.go</kbd></li>
-          </ul>
-          <pre class="fragment"><code data-trim data-noescape class="bf">
-            function.zip
-              |- function
-              |- quote/function.json
-              |- host.json
-          </code></pre>
-        </section>
-        <section>
-          <h2 class="cross-blue">Quote Function erstellen</h2>
-          <img class="fragment" src="themes/go-serverless/azure-func-app-1.png" />
-        </section>
-        <section>
-          <h2 class="cross-blue">Quote Function erstellen</h2>
-          <img class="fragment" src="themes/go-serverless/azure-func-app-2.png" />
-        </section>
-        <section>
-          <h2 class="cross-blue">Quote Function erstellen</h2>
-          <span style="font-size: 80%;">Benötigte Azure Resourcen:</span>
-          <img src="themes/go-serverless/dogop-az-func-resources.png" />
-        </section>
-        <!--
-        <section>          
-          <h2 class="cross-blue">   
-            Quote Azure Function  <br/>
-            <img style="width: 40px; display: inline;" src="themes/go-serverless/tf-icon.png" /> 
-            <span style="font-size: 70%;">Terraform Deployment</span>
-           </h2>
-          <pre class="fragment" style="font-size: 0.33em;"><code data-trim data-noescape class="hcl">
-            resource "azurerm_linux_function_app" "dogop" {
-              name                        = "dogop-serverless-quote"
-              functions_extension_version = "~4"
-              resource_group_name         = azurerm_resource_group.dogop.name
-              location                    = azurerm_resource_group.dogop.location
-
-              # Service Plan
-              service_plan_id             = azurerm_service_plan.dogop.id
-
-              # Stored Function Binary
-              storage_account_name        = azurerm_storage_account.dogop.name
-              storage_account_access_key  = azurerm_storage_account.dogop.primary_access_key
-              zip_deploy_file             = data.archive_file.app.output_path
-        
-              # App Insights
-              site_config {
-                application_insights_connection_string = azurerm_application_insights.insights.connection_string
-                application_insights_key               = azurerm_application_insights.insights.instrumentation_key
-              }
-            
-              app_settings = {
-                "WEBSITE_RUN_FROM_PACKAGE" = 1
-              }
-            
-            }
-          </code></pre>
-        </section>
-        -->
-        <section>
-          <h3 class="cross-blue">Quote Azure Function App<br> <span style="font-size: 70%; position: relative; top: -15px;">Zahlen, Daten, Fakten</span></h3>
-          <ul>
-            <li class="fragment">Antwortzeit Quote <b class="cross-blue">30 ms</b></li>
-            <li class="fragment">Binary <kbd style="font-size: 90%;">function</kbd> Größe <b class="cross-blue">9 MB</b></li>
-            <li class="fragment">Keine extra Dependencies, nur Standardlib 😍</li>
-          </ul>
-        </section>
-      </section>
-      <section>
-        <section data-background-image="./themes/Pattern-20-outline.svg" data-background-size="400px"
-        data-background-repeat="repeat" data-background-opacity=".15">
-          <h1 class="cross-yellow">Quote <br /> Google Cloud Run</h1>
-        </section>
-        <section>
-          <h2 class="cross-yellow">Go Standardlib WebServer nutzen</h2>
-          <pre style="font-size: 0.39em;"><code data-trim data-noescape class="go" data-line-numbers="8,30|8-14|16-17|16-25|27-29|">
-            package main
-            
-            import (
-              "net/http"
-              "os"
-            )
-            
-            func main() {
-              // 1. Port initialisieren
-              listenAddr := ":8080" // Default Port
-              customHandlerPort, ok := os.LookupEnv("PORT")
-              if ok {
-                listenAddr = ":" + customHandlerPort
-              }
-
-              // 2. Http Router erstellen
-              router := http.NewServeMux()
-
-              // a) Quote Handler registrieren
-              router.HandleFunc("POST /api/quote", HandleQuote)
-
-              // b) Hello Handler registrieren
-              router.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-                w.Write([]byte("Hello DogOp!"))
-              })
-
-              // 3. Web Server starten
-              log.Printf("Listening on %v", listenAddr)
-              http.ListenAndServe(listenAddr, router)
-            }
-          </code></pre>
-        </section>
-        <section>
-          <h2 class="cross-yellow">Dockerfile für DogOP</h2>
-          <pre class="fragment" style="font-size: .51em;"><code data-trim data-noescape class="bash" data-trim data-noescape data-line-numbers="1-5|7-11|">
-          # 1. DogOp Builder
-          FROM golang as builder
-          WORKDIR /app
-          ADD . /app
-          RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o build/dogop .
-          
-          # 2. DogOp Container
-          FROM gcr.io/distroless/static
-          COPY --from=builder /app/build/dogop /usr/bin/
-          EXPOSE 8080
-          ENTRYPOINT ["/usr/bin/dogop"]
-        </code></pre>
-        <div class="fragment box-content rounded p-6 border-4 transform -rotate-12 text-black"
-          style="position: relative; top: -260px; background-color: rgb(178, 178, 178);">
-          🚢 Google Distroless Image <b>8,5 MB</b>
-        </div>
-        </section>
-        <section>          
-          <h2 class="cross-white">Docker DogOP mit <img src="themes/buildpacks-logo.png" style="width: 5em; display: inline;"></h2>
-          <pre class="fragment" style="font-size: .51em;"><code data-trim data-noescape class="clean" data-trim data-noescape>
-            // 1. Docker Image bauen
-            >_ pack build dogop-cnb 
-                 --buildpack paketo-buildpacks/go  
-                 --builder paketobuildpacks/builder-jammy-tiny
-          </code></pre>
-          <pre class="fragment" style="font-size: .51em;"><code data-trim data-noescape class="clean" data-trim data-noescape>
-            // 2. Docker Image ausühren
-            >_ docker run dogop-cnb
-          </code></pre>
-          <div class="fragment box-content rounded p-6 border-4 transform -rotate-12 text-black"
-          style="position: relative; top: -260px; background-color: rgb(178, 178, 178);">
-          🚢 Docker Image Buildpack <b>40 MB</b>
-          </div>
-        </section>
-        <section>
-          <h2 class="cross-yellow">Cloud Run erstellen</h2>
-          <img style="width: 87%;" src="themes/go-serverless/gcp-cloud-run-create.png" />
-        </section>
-        <section>
-          <h3 class="cross-yellow">Quote Cloud Function <br> <span style="font-size: 70%; position: relative; top: -15px;">Zahlen, Daten, Fakten</span></h3>
-          <ul>
-            <li class="fragment">Container Startup in <b class="cross-blue">40-80 ms</b></li>
-            <li class="fragment">Hauptspeicher <b class="cross-blue">25 MB</b></li>
-            <li class="fragment">Antwortzeit Quote <b class="cross-blue">17 ms</b></li>
-          </ul>
-        </section>        
       </section>
       <section>
         <section data-background-image="./themes/Pattern-32-outline.svg" data-background-size="400px"
         data-background-repeat="repeat" data-background-opacity=".15">
-          <h1 class="cross-blue">Quote <br /> Azure Container App</h1>
+        <h1 class="cross-yellow">Freddys BBQ <br/>in Produktion <br/>🍖</h1>
         </section>
         <section>
-          <h2 class="cross-blue">Azure Container App</h2>
+          <h2 class="cross-yellow">In Produktion</h2>
           <ul>
-            <li class="fragment">Kubernetes ohne Server</li>
-            <li class="fragment">KEDA Autoscaling, Replicas und Ingress von Kubernetes</li>
-            <li class="fragment">Ein Container App Environment für mehrere Apps</li>
+            <li class="fragment">Konfiguration über Umgebungsvariablen</li>
+            <li class="fragment">Passwörter aus Secrets</li>
+            <li class="fragment">Probes</li>
+            <li class="fragment">Workload Profiles</li>
           </ul>
-        </section>  
-        <section>
-          <h2 class="cross-blue">Container App erstellen</h2>
-          <img style="width: 89%;" src="themes/go-serverless/dogop-container-app-create-1.png" />
-        </section>
-        <section>
-          <h2 class="cross-blue">Container App erstellen</h2>
-          <img style="width: 89%;" src="themes/go-serverless/dogop-container-app-create-2.png" />
-        </section>
-        <section>
-          <h2 class="cross-blue">Container App erstellen</h2>
-          <img style="width: 89%;" src="themes/go-serverless/dogop-container-app-create-3.png" />
-        </section>
-        <section>
-          <h3 class="cross-blue">Azure Container App <br> <span style="font-size: 70%; position: relative; top: -15px;">Zahlen, Daten, Fakten</span></h3>
-          <ul>
-            <li class="fragment">Container Cold Startup in <b class="cross-blue">600 ms</b> 😮‍💨</li>
-            <li class="fragment">Antwortzeit Quote <b class="cross-blue">13 ms</b></li>
-          </ul>
-        </section>
-      <section>
-        <h2 class="cross-red">Health Check</h2>
-        <ul>
-          <li class="fragment">Nutzung von <code>health-go</code> (hellofresh)</li>
-          <li class="fragment">Fertige des Checks für Postgres, HTTP, Redis, ...</li>
-        </ul>
-      </section>
-      <section>
-        <h2 class="cross-red">Health Check</h2>
-        <pre class="fragment" style="font-size: .43em;"><code data-trim data-noescape class="go" data-trim data-noescape data-line-numbers="1-6,18|7-17|20-21|">
-// Register Health Check
-h, _ := health.New(
-  health.WithComponent(health.Component{
-    Name:    "dogop",
-    Version: "v0.0.1",
-  }),
-  health.WithChecks(
-    health.Config{
-      Name:      "check",
-      Timeout:   time.Second * 2,
-      SkipOnErr: false,
-      Check: func(ctx context.Context) error {
-        // check implementation goes here
-        return nil
-      },
-    },
-  ),
-)
-
-// Register Handler Function
-router.HandleFunc("GET /health", h.HandlerFunc)
-      </code></pre>
-      </section>
+        </section> 
       </section>
       <section>
         <section data-background-image="./themes/Pattern-13-outline.svg" data-background-size="400px"
         data-background-repeat="repeat" data-background-opacity=".15">
-        <h2 class="cross-white" style="margin-bottom: 1em;">Serverless Tarifrechner DogOp</h2>
+        <h2 class="cross-white" style="margin-bottom: 1em;">Azure Container Apps</h2>
         <div class="grid grid-cols-12 gap-1 content-start" style="font-size: 75%;">
           <div class="col-span-6 fragment">
             <h3 class="cross-white">Function-as-a-Service</h3>
@@ -813,33 +186,15 @@ router.HandleFunc("GET /health", h.HandlerFunc)
           </div>
         </div>
         </section>
-        <!--
-        <section>
-          <h2 class="cross-white">Als nächstes</h2>
-          <ul>
-            <li class="fragment">Weitere Ereignisse (Message, Storage, ...)</li>
-            <li class="fragment">Tracing und Debugging</li>
-            <li class="fragment">Security</li>
-          </ul>
-        </section>
-        -->
-        <section>
-          <h2 style="font-size: 170%" class="cross-white">Serverless Booster</h2>
-          <ol style="font-size: 130%; list-style-type:none;">
-            <li class="fragment">🏃 Schnell</li>
-            <li class="fragment">☯️ Einfach</li>
-            <li class="fragment">🚂 Zuverlässig</li>
-            </ol>
-        </section>
       </section>
       <section>
-        <h2 style="font-size: 170%">3 Gründe für Go</h2>
-        <ol style="font-size: 130%">
-          <li class="fragment">Einfach</li>
-          <li class="fragment">Mächtig</li>
-          <li class="fragment">Langweilig</li>
+        <h2 style="font-size: 170%">3 Gründe für <br/> Azure Container Apps</h2>
+        <ol style="font-size: 130%; list-style-type:none;">
+          <li class="fragment">🏃 Schnell</li>
+          <li class="fragment">☯️ Einfach</li>
+          <li class="fragment">🚂 Mächtig</li>
         </ol>
-      </section>
+    </section>
       <section>
         <div class="grid grid-cols-2 gap-1 text-left">
           <div>
@@ -876,8 +231,9 @@ router.HandleFunc("GET /health", h.HandlerFunc)
           </div>
         </div>
       </section>
-      <section data-background-image="./themes/go-serverless/qr-code.png" data-background-size="30%">
-        <h1 style="margin-top: -4em;">Serverless mit Go</h1>
+      <section>
+        <h2>Microservices lieben <br/>Azure Container Apps</h2>
+        <img src="./themes/qr-code.png" width=400"/>
       </section>
       <!--
   <section>
