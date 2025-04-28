@@ -9,14 +9,13 @@ resource "azurerm_container_app" "delivery" {
       name   = "delivery"
       image  = "ghcr.io/remast/delivery-aca:0.1.0"
       cpu    = 0.5
-      memory = "1.0Gi"
+      memory = "1Gi"
     }
     max_replicas = 1
     min_replicas = var.min_replicas
   }
   ingress {
     target_port      = 8050
-    external_enabled = false
     traffic_weight {
       latest_revision = true
       percentage      = 100

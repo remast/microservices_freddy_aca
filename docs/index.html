@@ -25,16 +25,18 @@
         </aside>
       </section>
       <section>
-        <h2>Azure Container Apps</h2>
-        <h2>Container aber einfach</h2>
-      </section>
-      <section>
+        <section data-background-image="./themes/timelab-sWOvgOOFk1g-unsplash.jpg" >
+          <h1 class="cross-white fragment">Unser k8s Traum ...</h1>
+        </section>
+        <section data-background-image="./themes/premium_photo-1661644823131-7de42f3c04ab.avif" >
+          <h1 class="cross-white">... ich im Projekt</h1>
+        </section>
         <section data-background-image="./themes/Pattern-29-outline.svg" data-background-size="400px"
           data-background-repeat="repeat" data-background-opacity=".15">
-          <h1 class="cross-white">Azure Container Apps @crossnative</h1>
+          <h1>Es war einmal ...</h1>
         </section>        
         <section>
-          <h2 class="cross-white">Ausgangssituation</h2>
+          <h2>Projekte bei crossnative</h2>
           <ul>
             <li class="fragment">Standardisierte Software Projekte</li>
             <li class="fragment">Fokus auf Anwendungen nicht Infrastruktur</li>
@@ -48,26 +50,26 @@
           Azure Container Apps ! 🚀
           </div>
         </section>
+      </section>
+      <section>
         <section>
-          <h2 class="cross-white" style="margin-bottom: 1em;">Azure Container Apps</h2>
-          <div class="grid grid-cols-12 gap-1 content-start">
-            <div class="col-span-3 fragment">
-              safa
-            </div>
-            <div class="col-span-9 fragment">
+          <h2 class="cross-white" style="margin-bottom: 1em;">       
+            <img src="themes/aca_logo.png" width="300" style="display: inline;"/> Azure Container Apps
+          </h2>
               <ul>
-                <li class="fragment">vollständig verwaltete Container Plattform</li>
+                <li class="fragment">verwaltete Serverless Container Plattform</li>
                 <li class="fragment">flexibel Skalierbar (Zero to Hero)</li>
                 <li class="fragment">"mini" k8s mit 1 Namespace</li>
                 <li class="fragment">basiert auf Azure Kubernetes Plattform</li>
                 <li class="fragment">Kubernetes ohne Server</li>
                 <li class="fragment">KEDA Autoscaling, Replicas und Ingress von Kubernetes</li>
               </ul>
-            </div>
-          </div>
         </section>
         <section>
-          <h2 class="cross-white">ACA @crossnative</h2>
+          <h2 class="cross-white">
+            <img src="themes/aca_logo.png" width="200" style="display: inline;"/> 
+            Azure Container Apps <br/>&nbsp; bei crossnative
+          </h2>
           <ul>
             <li class="fragment">nutzen ACA seit 2 Jahren</li>
             <li class="fragment">erst nur für Test und Entwicklung</li>
@@ -78,7 +80,7 @@
       <section>
         <section data-background-image="./themes/Pattern-13-outline.svg" data-background-size="400px"
         data-background-repeat="repeat" data-background-opacity=".15">
-          <h1 class="cross-red">Freddys BBQ <br/>Basis Setup <br/>🍖</h1>
+          <h1 class="cross-red">Freddys BBQ <br/><span class="fragment">Basis Setup</span> <br/>🍖</h1>
         </section>
         <section >
           <h2 class="cross-red">Freddys BBQ _ Übersicht</h2>
@@ -107,20 +109,177 @@
         </section>
         <section>
           <h2 class="cross-red" >Freddys Container Apps</h2>
-          <img src="themes/aca-cae-screenshot.png" width=1400"/>
+          <img src="themes/aca-cae-screenshot.png" width="1400"/>
         </section>
         <section>
           <h2 class="cross-red" >Shop Frontend Container App</h2>
           <img src="themes/aca-app-shop-frontend-screenshot.png" width=1400"/>
         </section>
         <section>
-          <h2 class="cross-red">Demo 🚧</h2>
+          <h2 class="cross-red">Demo BBQ bestellen _ Teil 1 🚧</h2>
+        </section>
+        <section data-transition="none">
+          <h2 class="cross-red">BBQ Bestellen Ablauf #1</h2>
+          <img src="themes/bbq_order_2.png" width="54%" style="position: relative; left: -28px;"/>
+        </section>
+        <section data-transition="none">
+          <h2 class="cross-red">BBQ Bestellen Ablauf #3</h2>
+          <img src="themes/bbq_order_3.png" width="64%" style="position: relative; left: -66px;"/>
+        </section>
+        <section data-transition="none">
+          <h2 class="cross-red">BBQ Bestellen Ablauf #4</h2>
+          <img src="themes/bbq_order_4.png"width="72%" style="position: relative; left: -36px;"/>
+        </section>
+        <section>
+          <h2 class="cross-red">Demo BBQ bestellen _ Teil 2 🚧</h2>
         </section>
       </section>
       <section>
         <section data-background-image="./themes/Pattern-29-outline.svg" data-background-size="400px"
         data-background-repeat="repeat" data-background-opacity=".15">
           <h1 class="cross-blue">Infrastruktur mit Terraform</h1>
+        </section>
+        <section>
+          <h2>Container Apps Basis</h2>
+          <pre style="font-size: 37%"><code  data-trim data-line-numbers="1-5|7-14|16-23|25-31|" class="terraform">
+            /* ResourceGroup */
+            resource "azurerm_resource_group" "freddy" {
+              name     = "rg-freddy-dev-westeu"
+              location = "West Europe"
+            }
+            
+            /* Log Analytics Workspace */
+            resource "azurerm_log_analytics_workspace" "app_log_analytics" {
+              name                = "log-freddy-dev-westeu"
+              location            = azurerm_resource_group.freddy.location
+              resource_group_name = azurerm_resource_group.freddy.name
+              sku                 = "PerGB2018"
+              retention_in_days   = 30
+            }
+            
+            /* Application Insights */
+            resource "azurerm_application_insights" "freddy_appinsights" {
+              name                = "appi-freddy-dev-westeu"
+              location            = azurerm_resource_group.freddy.location
+              resource_group_name = azurerm_resource_group.freddy.name
+              workspace_id        = azurerm_log_analytics_workspace.app_log_analytics.id
+              application_type    = "web"
+            }
+            
+            /* Container App Environment */
+            resource "azurerm_container_app_environment" "app_container_env" {
+              name                               = "cae-freddy-dev-westeu"
+              location                           = azurerm_resource_group.freddy.location
+              resource_group_name                = azurerm_resource_group.freddy.name
+              log_analytics_workspace_id         = azurerm_log_analytics_workspace.app_log_analytics.id
+            }
+            </code></pre>
+        </section>
+        <section>
+          <h2>Container App <span class="cross-white">Delivery</span> 🚚</h2>
+          <pre style="font-size: 42%"><code  data-trim data-line-numbers="1-5,27|7-16|18-25|" class="terraform">
+            resource "azurerm_container_app" "delivery" {
+              name                         = "delivery"
+              container_app_environment_id = azurerm_container_app_environment.app_container_env.id
+              resource_group_name          = azurerm_resource_group.freddy.name
+              revision_mode                = "Single"
+            
+              template {
+                container {
+                  name   = "delivery"
+                  image  = "ghcr.io/remast/delivery-aca:0.1.0"
+                  cpu    = 0.5
+                  memory = "1Gi"
+                }
+                min_replicas = 0
+                max_replicas = 1
+              }
+
+              ingress {
+                target_port      = 8050
+                traffic_weight {
+                  latest_revision = true
+                  percentage      = 100
+                }
+              }
+            
+            }
+            </code></pre>
+        </section>
+        <section>
+          <h2>Container App <span class="cross-yellow">Order</span> 🤑</h2>
+          <pre style="font-size: 34%"><code  data-trim data-line-numbers="1-5,27|7-16|18-25|" class="terraform">
+            resource "azurerm_container_app" "order" {
+              name                         = "order"
+              container_app_environment_id = azurerm_container_app_environment.app_container_env.id
+              resource_group_name          = azurerm_resource_group.freddy.name
+              revision_mode                = "Single"
+            
+              template {
+                container {
+                  name   = "order"
+                  image  = "ghcr.io/remast/order-aca:0.1.0"
+                  cpu    = 0.5
+                  memory = "1Gi"
+                  env {
+                    name  = "DELIVERY_SERVICE_URL"
+                    value = "http://delivery"
+                  }
+                  env {
+                    name  = "KITCHEN_SERVICE_URL"
+                    value = "http://kitchen"
+                  }
+                }
+                min_replicas = 0
+                max_replicas = 1
+              }
+            
+              ingress {
+                target_port      = 8060
+                traffic_weight {
+                  latest_revision = true
+                  percentage      = 100
+                }
+              }
+            
+            }
+            </code></pre>
+        </section>
+        <section>
+          <h2>Container App <span class="cross-red">Shop Frontend</span> 🏪</h2>
+          <pre style="font-size: 37%"><code  data-trim data-line-numbers="1-5,27|7-16|18-25|" class="terraform">
+            resource "azurerm_container_app" "shop-frontend" {
+              name                         = "shop-frontend"
+              container_app_environment_id = azurerm_container_app_environment.app_container_env.id
+              resource_group_name          = azurerm_resource_group.freddy.name
+              revision_mode                = "Single"
+            
+              template {
+                container {
+                  name   = "shop-frontend"
+                  image  = "ghcr.io/remast/shop-frontend-aca:0.2.0"
+                  cpu    = 0.25
+                  memory = "0.5Gi"
+                }
+                min_replicas = 0
+                max_replicas = 1
+              }
+
+              ingress {
+                target_port      = 4200
+                external_enabled = true
+                traffic_weight {
+                  latest_revision = true
+                  percentage      = 100
+                }
+              }
+            
+            }
+
+            output "shop_frontend_latest_revision_fqdn" {
+              value = azurerm_container_app.shop-frontend.latest_revision_fqdn
+            }
+            </code></pre>
         </section>
         <section>
           <h2 class="cross-blue">Demo 🚧</h2>
@@ -254,33 +413,6 @@
         <h2>Microservices lieben <br/>Azure Container Apps</h2>
         <img src="./themes/qr-code.png" width=400"/>
       </section>
-      <!--
-  <section>
-    <h2>Links</h2>
-    <ul>
-      <li>
-        <a href="https://gitlab.ppi.int/jsta/launchctl/-/releases"
-        ><code>launchctl</code> CLI Tool</a
-        >
-      </li>
-      <li>
-        <a href="https://gitlab.ppi.int/x-launchpad/backend/core-go"
-        >Go Launchpad</a
-        >
-      </li>
-      <li>
-        <a
-        href="https://sonarqube2-ppi-x.kube.ppidev.net/code?id=core-go&branch=main"
-        >
-        SonarQube Go Launchpad
-      </a>
-    </li>
-  </ul>
-</section>
-      <section>
-        <h2>Backup</h2>
-      </section>
--->
     </div>
   </div>
 

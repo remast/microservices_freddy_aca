@@ -14,6 +14,7 @@ resource "azurerm_container_app" "shop-frontend" {
     max_replicas = 1
     min_replicas = var.min_replicas
   }
+
   ingress {
     target_port      = 4200
     external_enabled = true

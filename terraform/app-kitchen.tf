@@ -16,7 +16,6 @@ resource "azurerm_container_app" "kitchen" {
   }
   ingress {
     target_port      = 8070
-    external_enabled = false
     traffic_weight {
       latest_revision = true
       percentage      = 100

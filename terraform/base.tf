@@ -1,3 +1,13 @@
+# Resource Group
+resource "azurerm_resource_group" "freddy" {
+  name     = "rg-${var.project}-${var.stage}-${var.location}"
+  location = "West Europe"
+  tags = {
+    project = "${var.project}"
+    stage   = var.stage
+  }
+}
+
 resource "azurerm_log_analytics_workspace" "app_log_analytics" {
   name                = "log-${var.project}-${var.stage}-${var.location}"
   location            = azurerm_resource_group.freddy.location
