@@ -1,1 +1,10 @@
+### Hello Kitchen
 GET http://localhost:8070
+
+### Readyness Check
+
+GET http://localhost:8070/health/readiness
+
+### Liveness Check
+
+GET http://localhost:8070/health/liveness

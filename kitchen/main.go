@@ -20,6 +20,14 @@ func main() {
 		fmt.Fprintf(w, "Hello Kitchen")
 	})
 
+	r.HandleFunc("GET /health/readiness", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Bring it on, I'm ready!")
+	})
+
+	r.HandleFunc("GET /health/liveness", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Alive and kicking.")
+	})
+
 	r.HandleFunc("POST /api/kitchen", func(w http.ResponseWriter, r *http.Request) {
 		bodyBytes, _ := io.ReadAll(r.Body)
 		requestBody := string(bodyBytes)

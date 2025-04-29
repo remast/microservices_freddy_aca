@@ -141,14 +141,14 @@
         </section>
         <section>
           <h2>Container Apps Basis</h2>
-          <pre style="font-size: 37%"><code  data-trim data-line-numbers="1-5|7-14|16-23|25-31|" class="terraform">
-            /* ResourceGroup */
+          <pre style="font-size: 37%"><code data-trim data-line-numbers="1-5|7-14|16-23|25-31|" class="terraform">
+            /* 1. ResourceGroup */
             resource "azurerm_resource_group" "freddy" {
               name     = "rg-freddy-dev-westeu"
               location = "West Europe"
             }
             
-            /* Log Analytics Workspace */
+            /* 2. Log Analytics Workspace */
             resource "azurerm_log_analytics_workspace" "app_log_analytics" {
               name                = "log-freddy-dev-westeu"
               location            = azurerm_resource_group.freddy.location
@@ -157,7 +157,7 @@
               retention_in_days   = 30
             }
             
-            /* Application Insights */
+            /* 3. Application Insights */
             resource "azurerm_application_insights" "freddy_appinsights" {
               name                = "appi-freddy-dev-westeu"
               location            = azurerm_resource_group.freddy.location
@@ -166,37 +166,37 @@
               application_type    = "web"
             }
             
-            /* Container App Environment */
-            resource "azurerm_container_app_environment" "app_container_env" {
-              name                               = "cae-freddy-dev-westeu"
-              location                           = azurerm_resource_group.freddy.location
-              resource_group_name                = azurerm_resource_group.freddy.name
-              log_analytics_workspace_id         = azurerm_log_analytics_workspace.app_log_analytics.id
+            /* 4. Container App Environment */
+            resource "azurerm_container_app_environment" "cae" {
+              name                       = "cae-freddy-dev-westeu"
+              location                   = azurerm_resource_group.freddy.location
+              resource_group_name        = azurerm_resource_group.freddy.name
+              log_analytics_workspace_id = azurerm_log_analytics_workspace.app_log_analytics.id
             }
             </code></pre>
         </section>
         <section>
-          <h2>Container App <span class="cross-white">Delivery</span> 🚚</h2>
+          <h2>Container App <span class="cross-white">Kitchen</span> !!</h2>
           <pre style="font-size: 42%"><code  data-trim data-line-numbers="1-5,27|7-16|18-25|" class="terraform">
-            resource "azurerm_container_app" "delivery" {
-              name                         = "delivery"
-              container_app_environment_id = azurerm_container_app_environment.app_container_env.id
+            resource "azurerm_container_app" "kitchen" {
+              name                         = "kitchen"
+              container_app_environment_id = azurerm_container_app_environment.cae.id
               resource_group_name          = azurerm_resource_group.freddy.name
               revision_mode                = "Single"
             
               template {
                 container {
-                  name   = "delivery"
-                  image  = "ghcr.io/remast/delivery-aca:0.1.0"
-                  cpu    = 0.5
-                  memory = "1Gi"
+                  name   = "kitchen"
+                  image  = "ghcr.io/remast/kitchen-aca:0.1.0"
+                  cpu    = 0.25
+                  memory = "0.5Gi"
                 }
                 min_replicas = 0
                 max_replicas = 1
               }
 
               ingress {
-                target_port      = 8050
+                target_port      = 8070
                 traffic_weight {
                   latest_revision = true
                   percentage      = 100
@@ -208,10 +208,10 @@
         </section>
         <section>
           <h2>Container App <span class="cross-yellow">Order</span> 🤑</h2>
-          <pre style="font-size: 34%"><code  data-trim data-line-numbers="1-5,27|7-16|18-25|" class="terraform">
+          <pre style="font-size: 35%"><code  data-trim data-line-numbers="1-5,33|7-12,21-24|13-20|" class="terraform">
             resource "azurerm_container_app" "order" {
               name                         = "order"
-              container_app_environment_id = azurerm_container_app_environment.app_container_env.id
+              container_app_environment_id = azurerm_container_app_environment.cae.id
               resource_group_name          = azurerm_resource_group.freddy.name
               revision_mode                = "Single"
             
@@ -240,17 +240,16 @@
                   latest_revision = true
                   percentage      = 100
                 }
-              }
-            
+              }            
             }
             </code></pre>
         </section>
         <section>
           <h2>Container App <span class="cross-red">Shop Frontend</span> 🏪</h2>
-          <pre style="font-size: 37%"><code  data-trim data-line-numbers="1-5,27|7-16|18-25|" class="terraform">
+          <pre style="font-size: 37%"><code  data-trim data-line-numbers="1-5,27,7-16|18-19,21-25|20,29-31|" class="terraform">
             resource "azurerm_container_app" "shop-frontend" {
               name                         = "shop-frontend"
-              container_app_environment_id = azurerm_container_app_environment.app_container_env.id
+              container_app_environment_id = azurerm_container_app_environment.cae.id
               resource_group_name          = azurerm_resource_group.freddy.name
               revision_mode                = "Single"
             
@@ -276,13 +275,46 @@
             
             }
 
-            output "shop_frontend_latest_revision_fqdn" {
+            output "shop_frontend_fqdn" {
               value = azurerm_container_app.shop-frontend.latest_revision_fqdn
             }
             </code></pre>
         </section>
         <section>
-          <h2 class="cross-blue">Demo 🚧</h2>
+          <h2>Terraform ausführen</h2>
+          <pre style="font-size: 37%"><code  data-trim data-line-numbers="1|3-28|" class="java">
+            >_ terraform apply
+
+            azurerm_resource_group.freddy: Refreshing state...
+            azurerm_container_app_environment.cae: Refreshing state...
+            azurerm_container_app.delivery: Refreshing state...
+            azurerm_container_app.kitchen: Refreshing state...
+            azurerm_container_app.shop-frontend: Refreshing state...
+            azurerm_container_app.order: Refreshing state...
+            
+            Terraform will perform the following actions:
+            
+              # azurerm_container_app.order will be updated in-place
+              ~ resource "azurerm_container_app" "order" {
+                  ~ template {
+                      ~ container {
+                          ~ memory = "0.5Gi" -> "1Gi"
+                        }
+                    }
+                }
+            
+            Plan: 0 to add, 1 to change, 0 to destroy.
+            
+            azurerm_container_app.order: Modifying...
+            azurerm_container_app.order: Modifications complete after 17s
+            Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+            
+            Outputs:
+            shop_frontend_fqdn = "shop-frontend-03.victorious-3fb.westeurope.azurecontainerapps.io"            
+          </code></pre>
+        </section>
+        <section>
+          <h2 class="cross-blue">Demo Terraform 🚧</h2>
         </section>
       </section>
       <section>
@@ -293,14 +325,54 @@
         <section>
           <h2 class="cross-yellow">In Produktion</h2>
           <ul>
-            <li class="fragment">Konfiguration über Umgebungsvariablen</li>
+            <li class="fragment">Probes für Health und Startup</li>
+            <li class="fragment">Blue/Green Deployments mit Revisionen</li>
             <li class="fragment">Passwörter aus Secrets</li>
-            <li class="fragment">Probes</li>
             <li class="fragment">Metriken (CPU Usage, Memory Working Set Bytes, Requests) und Logs</li>
             <li class="fragment">Skalieren mit KEDA</li>
             <li class="fragment">Workload Profiles</li>
           </ul>
-        </section> 
+        </section>
+        <section>
+          <h2>Probes für Health und Startup !!</h2>
+          <pre style="font-size: 41%"><code  data-trim data-line-numbers="1-5,27|7-16|18-25|" class="terraform">
+            resource "azurerm_container_app" "kitchen" {
+              template {
+                container {
+                  name   = "kitchen"
+                  image  = "ghcr.io/remast/kitchen-aca:0.1.0"
+                  cpu    = 0.25
+                  memory = "0.5Gi"
+
+                  startup_probe {
+                    interval_seconds = 5
+                    failure_count_threshold = 3
+                    port             = 8070
+                    path             = "/health/readiness"
+                    transport        = "HTTP"
+                  }
+                  readiness_probe {
+                    port      = 8070
+                    path      = "/health/readiness"
+                    transport = "HTTP"
+                  }
+                  liveness_probe {
+                    port      = 8070
+                    path      = "/health/liveness"
+                    transport = "HTTP"
+                  }
+                }
+              }
+            }
+            </code></pre>
+        </section>
+
+        <section>
+          <h2>Probes für Health und Startup</h2>
+        </section>
+        <section>
+          <h2>Workload Profiles</h2>
+        </section>
       </section>
       <section>
         <section data-background-image="./themes/Pattern-12-full.svg" data-background-size="400px"
@@ -311,8 +383,9 @@
           <h2>Was ACA noch kann</h2>
           <ul>
             <li class="fragment">Jobs</li>
+            <li class="fragment">Ereignisse</li>
             <li class="fragment">Authentifizierung</li>
-            <li class="fragment">SSL Zertifikate (mTLS?)</li>
+            <li class="fragment">SSL Zertifikate und mTLS</li>
           </ul>
         </section> 
       </section>

@@ -1,7 +1,6 @@
 ### Hello Order
 
-GET localhost:8060/
-
+GET http://localhost:8060/
 
 ### Post Invalid Order
 

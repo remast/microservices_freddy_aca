@@ -37,8 +37,8 @@ jobs:
           - name: 'Build + Push Image Kitchen'
             run: |
               cd kitchen
-              docker build . --tag ghcr.io/remast/kitchen-aca:0.1.0
-              docker push ghcr.io/remast/kitchen-aca:0.1.0
+              docker build . --tag ghcr.io/remast/kitchen-aca:0.2.0
+              docker push ghcr.io/remast/kitchen-aca:0.2.0
 
           - name: 'Build + Push Image Shop Frontend'
             run: |
