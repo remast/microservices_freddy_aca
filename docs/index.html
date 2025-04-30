@@ -345,11 +345,11 @@
                   memory = "0.5Gi"
 
                   startup_probe {
-                    interval_seconds = 5
+                    interval_seconds        = 5
                     failure_count_threshold = 3
-                    port             = 8070
-                    path             = "/health/readiness"
-                    transport        = "HTTP"
+                    port                    = 8070
+                    path                    = "/health/readiness"
+                    transport               = "HTTP"
                   }
                   readiness_probe {
                     port      = 8070

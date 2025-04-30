@@ -11,8 +11,8 @@ resource "azurerm_container_app" "delivery" {
       cpu    = 0.5
       memory = "1Gi"
     }
-    max_replicas = 1
     min_replicas = var.min_replicas
+    max_replicas = 1
   }
   ingress {
     target_port      = 8050

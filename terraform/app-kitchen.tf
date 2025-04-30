@@ -7,12 +7,12 @@ resource "azurerm_container_app" "kitchen" {
   template {
     container {
       name   = "kitchen"
-      image  = "ghcr.io/remast/kitchen-aca:0.1.0"
+      image  = "ghcr.io/remast/kitchen-aca:0.2.0"
       cpu    = 0.25
       memory = "0.5Gi"
     }
-    max_replicas = 1
     min_replicas = var.min_replicas
+    max_replicas = 1
   }
   ingress {
     target_port      = 8070

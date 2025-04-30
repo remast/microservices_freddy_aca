@@ -19,8 +19,8 @@ resource "azurerm_container_app" "order" {
         value = "http://kitchen"
       }
     }
-    max_replicas = 1
     min_replicas = var.min_replicas
+    max_replicas = 1
   }
 
   ingress {
