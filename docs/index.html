@@ -176,7 +176,7 @@
             </code></pre>
         </section>
         <section>
-          <h2>Container App <span class="cross-white">Kitchen</span> !!</h2>
+          <h2>Container App <span class="cross-white">Kitchen</span> 👩‍🍳</h2>
           <pre style="font-size: 42%"><code  data-trim data-line-numbers="1-5,27|7-16|18-25|" class="terraform">
             resource "azurerm_container_app" "kitchen" {
               name                         = "kitchen"
@@ -334,8 +334,8 @@
           </ul>
         </section>
         <section>
-          <h2>Probes für Health und Startup !!</h2>
-          <pre style="font-size: 41%"><code  data-trim data-line-numbers="1-5,27|7-16|18-25|" class="terraform">
+          <h2>Probes für Health und Startup 👩‍🍳</h2>
+          <pre style="font-size: 41%"><code  data-trim data-line-numbers="1,28|9-25|" class="terraform">
             resource "azurerm_container_app" "kitchen" {
               template {
                 container {
@@ -366,9 +366,47 @@
             }
             </code></pre>
         </section>
-
         <section>
-          <h2>Probes für Health und Startup</h2>
+          <h2>Passwörter aus Secrets 🤑</h2>
+          <pre style="font-size: 41%"><code  data-trim data-line-numbers="1-2,29|4-7|4-7,24-27|" class="terraform">
+            resource "azurerm_container_app" "order" {
+              name = "order"
+            
+              secret {
+                name  = "secret-api-key"
+                value = "***shush***"
+              }
+            
+              template {
+                container {
+                  name   = "order"
+                  image  = "ghcr.io/remast/order-aca:0.1.0"
+                  cpu    = 0.5
+                  memory = "1Gi"
+
+                  env {
+                    name  = "DELIVERY_SERVICE_URL"
+                    value = "http://delivery"
+                  }
+                  env {
+                    name  = "KITCHEN_SERVICE_URL"
+                    value = "http://kitchen"
+                  }
+                  env {
+                    name        = "SECRET_API_KEY"
+                    secret_name = "secret-api-key"
+                  }
+                }
+              }
+            }
+            </code></pre>
+        </section>
+        <section>
+          <h2>Blue/Green Deployments 🚦</h2>
+          <img src="themes/aca_bluegreen.png" />
+          <ul>
+            <li class="fragment">sdf</li>
+          </ul>
         </section>
         <section>
           <h2>Workload Profiles</h2>

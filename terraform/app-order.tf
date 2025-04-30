@@ -4,6 +4,11 @@ resource "azurerm_container_app" "order" {
   resource_group_name          = azurerm_resource_group.freddy.name
   revision_mode                = "Single"
 
+  secret {
+    name  = "secret-api-key"
+    value = "***shush***"
+  }
+
   template {
     container {
       name   = "order"
@@ -17,6 +22,10 @@ resource "azurerm_container_app" "order" {
       env {
         name  = "KITCHEN_SERVICE_URL"
         value = "http://kitchen"
+      }
+      env {
+        name        = "SECRET_API_KEY"
+        secret_name = "secret-api-key"
       }
     }
     min_replicas = var.min_replicas
