@@ -26,10 +26,8 @@
       </section>
       <section>
         <section data-background-image="./themes/timelab-sWOvgOOFk1g-unsplash.jpg" >
-          <h1 class="cross-white fragment">Unser k8s Traum ...</h1>
         </section>
         <section data-background-image="./themes/premium_photo-1661644823131-7de42f3c04ab.avif" >
-          <h1 class="cross-white">... ich im Projekt</h1>
         </section>
         <section data-background-image="./themes/Pattern-29-outline.svg" data-background-size="400px"
           data-background-repeat="repeat" data-background-opacity=".15">
@@ -317,6 +315,39 @@
           <h2 class="cross-blue">Demo Terraform 🚧</h2>
         </section>
       </section>
+      <!--
+      <section>
+        <section data-background-image="./themes/Pattern-21-outline.svg" data-background-size="400px"
+        data-background-repeat="repeat" data-background-opacity=".15">
+          <h1 class="cross-red">Azure CLI 💻</h1>
+        </section>
+        <section>
+          <h2 class="cross-red">Azure CLI Demo </h2>
+          <pre style="font-size: 36%"><code  data-trim data-line-numbers="1-3|" class="bash">
+            >_ az containerapp list   
+                --resource-group 'rg-freddy-dev-westeu' 
+                -o table
+            >_ 
+            Name           ResourceGroup         Fqdn
+            -------------  --------------------  ----------------------------------------------------
+            shop-frontend  rg-freddy-dev-westeu  shop-frontend.vic-3fb98704.azurecontainerapps.io
+            kitchen        rg-freddy-dev-westeu  kitchen.internal.vic-3fb98704.azurecontainerapps.io
+            order          rg-freddy-dev-westeu  order.internal.vic-3fb98704.azurecontainerapps.io
+            delivery       rg-freddy-dev-westeu  delivery.internal.vic-3fb98704.azurecontainerapps.io
+          </code></pre>
+        </section>
+        <section>
+          <h2 class="cross-red">Azure CLI Demo </h2>
+          <pre style="font-size: 43%"><code  data-trim data-line-numbers="1|3-28|" class="bash">
+            >_ az containerapp show
+                --resource-group 'rg-freddy-dev-westeu'
+                --name shop-frontend
+                --query properties.configuration.ingress.fqdn
+            >_ "shop-frontend.victoriousfield-3fb98704.westeurope.azurecontainerapps.io"
+          </code></pre>
+        </section>
+      </section>
+      -->
       <section>
         <section data-background-image="./themes/Pattern-32-outline.svg" data-background-size="400px"
         data-background-repeat="repeat" data-background-opacity=".15">
@@ -325,16 +356,15 @@
         <section>
           <h2 class="cross-yellow">In Produktion</h2>
           <ul>
-            <li class="fragment">Probes für Health und Startup</li>
-            <li class="fragment">Blue/Green Deployments mit Revisionen</li>
-            <li class="fragment">Passwörter aus Secrets</li>
-            <li class="fragment">Metriken (CPU Usage, Memory Working Set Bytes, Requests) und Logs</li>
-            <li class="fragment">Skalieren mit KEDA</li>
-            <li class="fragment">Workload Profiles</li>
+            <li class="fragment">Probes für Health und Startup 👨‍⚕️</li>
+            <li class="fragment">Blue/Green Deployments mit Revisionen 🚦</li>
+            <li class="fragment">Passwörter aus Secrets 🔐</li>
+            <li class="fragment">Metriken (CPU, Speicher) und Logs ⏱️</li>
+            <li class="fragment">Workload Profile 🏃‍♂️</li>
           </ul>
         </section>
         <section>
-          <h2>Probes für Health und Startup 👩‍🍳</h2>
+          <h2>Probes für Health und Startup 👨‍⚕️</h2>
           <pre style="font-size: 41%"><code  data-trim data-line-numbers="1,28|9-25|" class="terraform">
             resource "azurerm_container_app" "kitchen" {
               template {
@@ -367,8 +397,16 @@
             </code></pre>
         </section>
         <section>
-          <h2>Passwörter aus Secrets 🤑</h2>
-          <pre style="font-size: 41%"><code  data-trim data-line-numbers="1-2,29|4-7|4-7,24-27|" class="terraform">
+          <h2>Blue/Green Deployments 🚦</h2>
+          <img src="themes/aca_bluegreen.png" />
+          <ul class="fragment" style="font-size: 90%; margin-top: .4em;">
+            <li>Revisionen werden immer Blue/Green deployt</li>
+            <li>Traffic Splitting zwischen Revisionen möglich</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Passwörter aus Secrets 🔐</h2>
+          <pre style="font-size: 39%"><code  data-trim data-line-numbers="1-2,29|4-7|10,4-7,24-27,28|" class="terraform">
             resource "azurerm_container_app" "order" {
               name = "order"
             
@@ -402,14 +440,74 @@
             </code></pre>
         </section>
         <section>
-          <h2>Blue/Green Deployments 🚦</h2>
-          <img src="themes/aca_bluegreen.png" />
+          <h2>Metriken und Logs ⏱️</h2>
+          <div class="fragment">
+              <h3 class="cross-blue" style="text-align: left;">Metriken</h3>
+              <ul style="width: 100%; font-size: 87%;">
+                <li>Application Insights für Metriken</li>
+                <li>Metriken aller Apps zentral verfügbar</li>
+                <li>Standard Metriken für CPU, Speicher, Replica</li>
+              </ul>
+          </div>
+          <div class="fragment" style="text-align: left; margin-top: .7em;">
+              <h3 class="cross-white">Logs</h3>
+              <ul style="width: 100%; font-size: 87%;">
+                <li>Logs aller Apps zentral verfügbar</li>
+                <li>Anwendungs Logs in <code>ContainerAppConsoleLogs_CL</code></li>
+                <li>Infrastruktur Logs in <code>ContainerAppSystemLogs_CL</code></li>
+              </ul>
+          </div>
+        </section>
+        <section>
+          <h2 class="cross-white">Anwendungs Logs ⏱️</h2>
+          <img src="themes/order_app_logs.png" />
+        </section>
+        <section>
+          <h2 class="cross-white">Infrastruktur Logs ⏱️</h2>
+          <img src="themes/order_infra_logs.png" />
+        </section>
+        <section>
+          <h2>Workload Profile 🏃‍♂️</h2>
           <ul>
-            <li class="fragment">sdf</li>
+            <li class="fragment">regeln verfügbare CPU und Speicher Limits</li> 
+            <li class="fragment">hängen am Container App Environment</li> 
+            <li class="fragment">Standard ist Consumption, alternative Dedicated</li> 
+            <li class="fragment">Dedicated Profile nutzt Instanzen <br/> (ähnlich k8s Nodes)</li>
+            <li class="fragment">Speicher- und GPU optimierte Instanzen möglich</li> 
           </ul>
         </section>
         <section>
-          <h2>Workload Profiles</h2>
+          <h2>Workload Profile 🏃‍♂️</h2>
+          <table class="cross-white" style="font-size: 85%;">
+            <thead>
+              <tr>
+                <th>Workload Profile</th>
+                <th>vCPU</th>
+                <th>Memory</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Consumption</td>
+                <td>4</td>
+                <td>8 Gi</td>
+                <td>Standard</td>
+              </tr>
+              <tr>
+                <td>Dedicated-D4</td>
+                <td>4</td>
+                <td>16 Gi</td>
+                <td>Allgemeine Nutzung</td>
+              </tr>
+              <tr>
+                <td>Dedicated-E4</td>
+                <td>4</td>
+                <td>32Gi</td>
+                <td>Speicher optimiert</td>
+              </tr>
+            </tbody>
+          </table>
         </section>
       </section>
       <section>
@@ -420,8 +518,8 @@
         <section>
           <h2>Was ACA noch kann</h2>
           <ul>
-            <li class="fragment">Jobs</li>
-            <li class="fragment">Ereignisse</li>
+            <li class="fragment">Container App Jobs <br/> einmalig, CRON-Schedule, Event getrieben)</li>
+            <li class="fragment">Skalieren mit KEDA</li>
             <li class="fragment">Authentifizierung</li>
             <li class="fragment">SSL Zertifikate und mTLS</li>
           </ul>
@@ -430,13 +528,13 @@
       <section>
         <section data-background-image="./themes/Pattern-13-outline.svg" data-background-size="400px"
         data-background-repeat="repeat" data-background-opacity=".15">
-        <h2 class="cross-white" style="margin-bottom: 1em;">Azure Container Apps</h2>
+        <h2 class="cross-white" style="margin-bottom: 1em;">Microserves lieben Azure Container Apps</h2>
         <div class="grid grid-cols-12 gap-1 content-start" style="font-size: 75%;">
           <div class="col-span-6 fragment">
-            <h3 class="cross-white">Function-as-a-Service</h3>
+            <h3 class="cross-red">Freddys Basis Setup</h3>
             <ol>
-              <li class="cross-yellow">
-                Google Cloud Run Function
+              <li class="cross-red">
+                Freddys Container Apps
                 <ul>
                   <li>Go Function Framework</li>
                   <li>HTTP Handler Function</li>
@@ -446,32 +544,23 @@
                 </ul>
               </li>
               <li class="cross-blue">
-                Azure Function App
+                Terraform Infrastruktur
                 <ul>
-                  <li>Umgebungsvariablen</li>
-                  <li>HTTP Router/Server</li>
-                  <li>Lokale Ausführung</li>
+                  <li>ACA Setup</li>
+                  <li>Ausführen und Ändern</li>
                 </ul>
               </li>
             </ol>
           </div>
           <div class="col-span-6 fragment">
-            <h3 class="cross-white">Serverless Containers</h3>
-            <ol start="3">
-              <li class="cross-yellow">
-                Google Cloud Run
-                <ul>
-                  <li>Docker Image</li>
-                  <li>HTTP Router/Server</li>
-                </ul>
-              </li>
-              <li class="cross-blue">
-                Azure Container Apps
-                <ul>
-                  <li>Health Check</li>
-                </ul>
-              </li>
-            </ol>
+            <h3 class="cross-yellow">ACA in Produktion</h3>
+            <ul>
+              <li>Probes für Health und Startup 👨‍⚕️</li>
+              <li>Blue/Green Deployments mit Revisionen 🚦</li>
+              <li>Passwörter aus Secrets 🔐</li>
+              <li>Metriken (CPU, Speicher) und Logs ⏱️</li>
+              <li>Workload Profile 🏃‍♂️</li>  
+            </ul>
           </div>
         </div>
         </section>
