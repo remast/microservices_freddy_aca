@@ -5,7 +5,7 @@ variable "project" {
 
 variable "min_replicas" {
   type    = number
-  default = 0
+  default = 1
 }
 
 variable "stage" {
