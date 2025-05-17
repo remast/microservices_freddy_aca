@@ -5,7 +5,7 @@ ADD . /app
 RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o build/kitchen .
 
 # 2. Container
-FROM alpine:3.20
+FROM alpine:3.21
 COPY --from=builder /app/build/kitchen /usr/bin/
 
 EXPOSE 8070
