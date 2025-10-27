@@ -11,7 +11,7 @@ COPY --from=npm_cacher node_modules node_modules
 RUN npm run build
 
 # 2. Frontend Container
-FROM caddy:2.8
+FROM caddy:2.10
 EXPOSE 4200
 COPY Caddyfile /etc/caddy/Caddyfile
 RUN cat /etc/caddy/Caddyfile
